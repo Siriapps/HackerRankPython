@@ -10,7 +10,6 @@ for i in range(rows // 2):
     print(printString.center(columns, "-"))
 
 print('WELCOME'.center(columns, '-'))
-
 # printing the bottom half of the mat
 for i in reversed(range(rows // 2)):
     printString = ".|." * ((i * 2) + 1)
