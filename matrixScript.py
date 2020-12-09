@@ -5,7 +5,8 @@ matrix = []
 for _ in range(n):
     matrix_item = list(input())
     matrix.append(matrix_item)
-string = "".join(map(str,list(sum(tuple(zip(*matrix)), ()))))
+
+zipped = list(zip(*matrix))
+string = "".join(["".join(x) for x in zipped])
 text = re.sub('([\w])[\W]+([\w])', r'\1 \2', string)
-text = re.sub('  ', ' ', text)
-print(text)
+print(re.sub('  ', ' ', text))
