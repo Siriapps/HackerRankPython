@@ -4,31 +4,32 @@ import time
 
 
 def trackTime(funcToBeDecorated):
-    def timeTaken(api):
+    def timeTaken(*args):
         startTime = int(time.time() * 1000)  # milliseconds
-        funcToBeDecorated(api)
+        data = funcToBeDecorated(*args)
         endTime = int(time.time() * 1000)  # milliseconds
-        print("\nResults:-")
         print(f"Function: {funcToBeDecorated.__name__}, Time Taken: {endTime - startTime}")
-
+        return data
     return timeTaken
 
 
 @trackTime
-def RESTapi(api):
+def getWheatherApi():
+    api = "https://api.weather.gov/gridpoints/TOP/31,80/forecast/hourly"
     handle = request.urlopen(api)  # opening the api url
     data = handle.read().decode()  # reading the data
-    js = json.loads(data)  # loading the json
-    # lst = []
+    return data
+
+@trackTime
+def parseWeatherData(WeatherForecast):
+    js = json.loads(WeatherForecast)  # loading the json
     periods = js["properties"]["periods"]
     for p in range(0, len(periods)):
         start = periods[p]["startTime"]  # getting the start time
         temp = periods[p]["temperature"]  # getting the temparature
         unit = periods[p]["temperatureUnit"]  # getting the unit of temperature
-        # lst.append(f"{start[11:16]} {temp}{unit}")
         print(f"{start[11:16]} {temp}{unit}")
-    # return "\n".join(i for i in lst)
 
+data = getWheatherApi()
+hourlyWeatherForecast = parseWeatherData(data)
 
-api = "https://api.weather.gov/gridpoints/TOP/31,80/forecast/hourly"
-RESTapi(api)
