@@ -8,7 +8,7 @@ def trackTime(funcToBeDecorated):
         startTime = int(time.time() * 1000)  # milliseconds
         data = funcToBeDecorated(*args)
         endTime = int(time.time() * 1000)  # milliseconds
-        print(f"Function: {funcToBeDecorated.__name__}, Time Taken: {endTime - startTime}")
+        print(f"Function: {funcToBeDecorated.__name__}, Time Taken: {endTime - startTime} msec")
         return data
     return timeTaken
 
